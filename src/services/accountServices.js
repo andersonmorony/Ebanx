@@ -4,20 +4,19 @@ exports.reset = () => {
     _accountRepository.reset();
 }
 
-exports.getAccountById = (id) => {
+exports.getAccountById = async (id) => {
 
-    const account = _accountRepository.getAccountById(id);
+    const account = await _accountRepository.getAccountById(id);
 
     if (!account) throw new Error('Account not found');
 
     return account;
 
-
 }
 
-exports.getBalanceById = (id) => {
+exports.getBalanceById = async (id) => {
 
-    const account = exports.getAccountById(id);
+    const account = await exports.getAccountById(id);
 
     return account.balance;
 }

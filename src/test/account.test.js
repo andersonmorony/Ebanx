@@ -50,3 +50,13 @@ test.only('should 201 deposit', async () => {
 
 
 });
+
+test.only('should get balance 200', async () => {
+    
+    const response = await request('http://localhost:3030/balance?account_id=100', 'GET');
+
+    const balance = response.data;
+
+    expect( response.status).toBe(200);
+    expect(balance).toBe(20);
+})

@@ -9,9 +9,9 @@ const reset = (req, res) => {
 
 const balance = async (req, res) => {
     try {
-        const id = req.params.account_id;
+        const id = req.query.account_id;
         const balance = await accountService.getBalanceById(id);
-        res.status(200).send(balance);
+        res.status(200).json(balance);
 
     }catch{
         res.status(404).send('0');

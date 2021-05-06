@@ -35,6 +35,8 @@ exports.deposit = (data) => {
 }
 
 exports.withdraw = (data) => {
+  
+  //Verifier if accounts exists
   exports.getAccountById(data.origin);
 
   const response = _accountRepository.withdraw(data);
@@ -44,6 +46,8 @@ exports.withdraw = (data) => {
 }
 
 exports.transfer = (data) => {
+
+  //Verifier if accounts exists
   exports.getAccountById(data.origin);
   exports.getAccountById(data.destination);
 

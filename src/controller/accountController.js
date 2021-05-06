@@ -23,7 +23,6 @@ const event = async (req, res) => {
   const data = req.body;
 
   try {
-
     switch (data.type) {
       case 'deposit':
         response = await accountService.deposit(data);

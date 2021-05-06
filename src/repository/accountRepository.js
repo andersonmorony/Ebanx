@@ -1,7 +1,9 @@
-let accounts = [];
+let accounts = [{"id":"300", "balance":0}];
+
+
 
 exports.reset = () => {
-    accounts = [];
+    accounts = [{"id":"300", "balance":0}];
 };
 
 exports.getAccountById = (id) => {

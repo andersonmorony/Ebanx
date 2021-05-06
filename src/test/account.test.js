@@ -87,7 +87,7 @@ test('should # Withdraw from existing account 201', async () => {
 
 })
 
-test.only('should # Transfer from existing account 201', async () => {
+test('should # Transfer from existing account 201', async () => {
 
     const account1 = { type: "deposit", destination: "100", amount: 15 };
     const account2 = { type: "deposit", destination: "300", amount: 0 };

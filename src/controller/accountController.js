@@ -7,6 +7,18 @@ const reset = (req, res) => {
 
 };
 
+const balance = async (req, res) => {
+    try {
+        const id = req.params.account_id;
+        const balance = await accountService.getBalanceById(id);
+        res.status(200).send(balance);
+
+    }catch{
+        res.status(404).send('0');
+    }
+}
+
 module.exports = {
-    reset
+    reset,
+    balance
 }

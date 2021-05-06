@@ -25,7 +25,7 @@ const event = async (req, res) => {
     if(data.type === 'deposit'){
         account = await accountService.postEvent(data);
     }
-    return res.status(200).send(account);
+    return res.status(201).send({destination: account});
 }
 
 module.exports = {

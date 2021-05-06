@@ -23,16 +23,21 @@ exports.getBalanceById = (id) => {
 }
 
 exports.postEvent = async (data) => {
-    let newAccount;
+
     const account = await _accountRepository.getAccountById(data.destination);
 
     if (!account) {
-        newAccount = await _accountRepository.createAccount({
+        return await _accountRepository.createAccount({
             id: data.destination,
             balance: data.amount
         });
-        return newAccount
+    } else {
+        return await _accountRepository.deposit({
+            id: data.destination,
+            balance: data.amount
+        });
     }
 
-
 }
+
+

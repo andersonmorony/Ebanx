@@ -18,7 +18,18 @@ const balance = async (req, res) => {
     }
 }
 
+const event = async (req, res) => {
+    const data = req.body;
+    let account;
+
+    if(data.type === 'deposit'){
+        account = await accountService.postEvent(data);
+    }
+    return res.status(200).send(account);
+}
+
 module.exports = {
     reset,
-    balance
+    balance,
+    event
 }

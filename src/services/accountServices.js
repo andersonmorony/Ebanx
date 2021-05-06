@@ -21,3 +21,18 @@ exports.getBalanceById = (id) => {
 
     return account.balance;
 }
+
+exports.postEvent = async (data) => {
+    let newAccount;
+    const account = await _accountRepository.getAccountById(data.destination);
+
+    if (!account) {
+        newAccount = await _accountRepository.createAccount({
+            id: data.destination,
+            balance: data.amount
+        });
+        return newAccount
+    }
+
+
+}

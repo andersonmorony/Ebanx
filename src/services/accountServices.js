@@ -29,7 +29,7 @@ exports.deposit = (data) => {
   if (!account) {
     response = _accountRepository.createAccount({ id: data.destination, balance: data.amount });
   } else {
-    response = _accountRepository.deposit({ id: data.destination, balance: data.amount });
+    response = _accountRepository.deposit(data);
   }
   return { destination : response }
 }
@@ -40,6 +40,14 @@ exports.withdraw = (data) => {
   const response = _accountRepository.withdraw(data);
 
   return {origin : response }
+
+}
+
+exports.transfer = (data) => {
+  exports.getAccountById(data.origin);
+  exports.getAccountById(data.destination);
+
+  return _accountRepository.transfer(data);
 
 }
 

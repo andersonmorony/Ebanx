@@ -31,6 +31,8 @@ const event = async (req, res) => {
       case 'withdraw':
         response = await accountService.withdraw(data);
         break;
+      case 'transfer':
+        response = await accountService.transfer(data);
     }
     res.status(201).send(response);
 

@@ -71,7 +71,7 @@ test('should Withdraw from non-existing account 404', async () => {
 
 })
 
-test.only('should # Withdraw from existing account 201', async () => {
+test('should # Withdraw from existing account 201', async () => {
 
     const data1 = { type: "deposit", destination: "100", amount: 20 };
     const data2 = { type: "withdraw", origin: "100", amount: 5 }
@@ -84,5 +84,24 @@ test.only('should # Withdraw from existing account 201', async () => {
 
     expect(response.status).toBe(201);
     expect(response.data).toStrictEqual({"origin": {"id":"100", "balance":15}});
+
+})
+
+test.only('should # Transfer from existing account 201', async () => {
+
+    const account1 = { type: "deposit", destination: "100", amount: 15 };
+    const account2 = { type: "deposit", destination: "300", amount: 0 };
+
+    const transfer = {"type":"transfer", "origin":"100", "amount":15, "destination":"300"};
+
+    //createAccount
+    await request('http://localhost:3030/event', 'POST', account1);
+    await request('http://localhost:3030/event', 'POST', account2);
+    
+
+    const response = await request('http://localhost:3030/event', 'POST', transfer);
+
+    expect(response.status).toBe(201);
+    expect(response.data).toStrictEqual({"origin": {"id":"100", "balance":0}, "destination": {"id":"300", "balance":15}});
 
 })

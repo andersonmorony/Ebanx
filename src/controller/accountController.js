@@ -2,34 +2,45 @@ const accountService = require('../services/accountServices');
 
 const reset = (req, res) => {
 
-   accountService.reset();
-   res.status(200).send('OK');
+  accountService.reset();
+  res.status(200).send('OK');
 
 };
 
 const balance = async (req, res) => {
-    try {
-        const id = req.query.account_id;
-        const balance = await accountService.getBalanceById(id);
-        res.status(200).json(balance);
+  try {
+    const id = req.query.account_id;
+    const balance = await accountService.getBalanceById(id);
+    res.status(200).json(balance);
 
-    }catch{
-        res.status(404).send('0');
-    }
+  } catch {
+    res.status(404).send('0');
+  }
 }
 
 const event = async (req, res) => {
-    const data = req.body;
-    let account;
+  let response;
+  const data = req.body;
 
-    if(data.type === 'deposit'){
-        account = await accountService.postEvent(data);
+  try {
+
+    switch (data.type) {
+      case 'deposit':
+        response = await accountService.deposit(data);
+        break;
+      case 'withdraw':
+        response = await accountService.withdraw(data);
+        break;
     }
-    return res.status(201).send({destination: account});
+    res.status(201).send(response);
+
+  } catch (e) {
+    res.status(404).send('0');
+  }
 }
 
 module.exports = {
-    reset,
-    balance,
-    event
+  reset,
+  balance,
+  event
 }

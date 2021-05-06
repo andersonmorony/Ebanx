@@ -18,3 +18,9 @@ exports.deposit = (data) => {
     account.balance += data.balance;
     return account;
 }
+
+exports.withdraw = (data) => {
+    let account = exports.getAccountById(data.origin);
+    account.balance -= data.amount;
+    return account;
+}

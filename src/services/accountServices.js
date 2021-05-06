@@ -1,41 +1,45 @@
 const _accountRepository = require('../repository/accountRepository');
 
 exports.reset = () => {
-    _accountRepository.reset();
+  _accountRepository.reset();
 }
 
-exports.getAccountById = async (id) => {
+exports.getAccountById = (id) => {
 
-    const account = await _accountRepository.getAccountById(id);
+  const account = _accountRepository.getAccountById(id);
 
-    if (!account) throw new Error('Account not found');
+  if (!account) throw new Error('Account not found');
 
-    return account;
+  return account;
 
 }
 
-exports.getBalanceById = async (id) => {
+exports.getBalanceById = (id) => {
 
-    const account = await exports.getAccountById(id);
+  const account = exports.getAccountById(id);
 
-    return account.balance;
+  return account.balance;
 }
 
-exports.postEvent = async (data) => {
+exports.deposit = (data) => {
 
-    const account = await _accountRepository.getAccountById(data.destination);
+  const account = _accountRepository.getAccountById(data.destination);
+  let response;
 
-    if (!account) {
-        return await _accountRepository.createAccount({
-            id: data.destination,
-            balance: data.amount
-        });
-    } else {
-        return await _accountRepository.deposit({
-            id: data.destination,
-            balance: data.amount
-        });
-    }
+  if (!account) {
+    response = _accountRepository.createAccount({ id: data.destination, balance: data.amount });
+  } else {
+    response = _accountRepository.deposit({ id: data.destination, balance: data.amount });
+  }
+  return { destination : response }
+}
+
+exports.withdraw = (data) => {
+  exports.getAccountById(data.origin);
+
+  const response = _accountRepository.withdraw(data);
+
+  return {origin : response }
 
 }
 
